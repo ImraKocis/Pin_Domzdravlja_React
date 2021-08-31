@@ -5,7 +5,7 @@ $oJson = array();
 
  $sQuery = "SELECT ordinacije.id_dom_zdravlja, ordinacije.naziv_ordinacije, ordinacije.opis, ordinacije.adresa, ordinacije.br_telefona, ordinacije.email, ordinacije.radno_vrijeme, ordinacije.napomena, gradovi.grad_naziv, zupanije.zupanija_naziv, djelatnosti.naziv_djelatnosti FROM ordinacije JOIN zupanije ON ordinacije.zupanija_id = zupanije.id_zupanije JOIN gradovi ON gradovi.id_grada = ordinacije.grad_id JOIN djelatnosti ON djelatnosti.id = ordinacije.id_djelatnost";
 
- $sQueryStaff="SELECT medicinsko_osoblje.dom_zdravlja,medicinsko_osoblje.id, medicinsko_osoblje.ime, medicinsko_osoblje.prezime, medicinsko_osoblje.tip, ordinacije.naziv_ordinacije, djelatnosti.naziv_djelatnosti FROM medicinsko_osoblje  JOIN ordinacije ON ordinacije.id_dom_zdravlja = medicinsko_osoblje.dom_zdravlja JOIN djelatnosti ON djelatnosti.id = medicinsko_osoblje.djelatnosti";
+ $sQueryStaff="SELECT medicinsko_osoblje.dom_zdravlja,medicinsko_osoblje.id, medicinsko_osoblje.ime, medicinsko_osoblje.prezime, medicinsko_osoblje.tip, ordinacije.naziv_ordinacije, djelatnosti.naziv_djelatnosti, tipovi.naziv_tipa FROM medicinsko_osoblje LEFT JOIN ordinacije ON ordinacije.id_dom_zdravlja = medicinsko_osoblje.dom_zdravlja LEFT JOIN djelatnosti ON djelatnosti.id = medicinsko_osoblje.djelatnosti LEFT JOIN tipovi ON medicinsko_osoblje.tip = tipovi.id";
 
 $Zaposlenici;
 $oData = $oConnection->query($sQuery);

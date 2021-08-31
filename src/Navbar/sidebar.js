@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { SidebarData } from './data'
-import Data from './zupanije'
+
 import SubMenu from './subMenu'
 import { IconContext } from 'react-icons/lib'
 import './sidebar.css'

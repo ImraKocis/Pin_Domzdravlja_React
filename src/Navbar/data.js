@@ -5,8 +5,7 @@ import * as AiIcons from 'react-icons/ai'
 import * as IoIcons from 'react-icons/io'
 import * as ImIcons from 'react-icons/im'
 import * as RiIcons from 'react-icons/ri'
-import Data from './zupanije'
-const Zupanije = Data
+
 const zupanije = [
   { id: 1, name: 'pero' },
   { id: 2, name: 'duro' },
@@ -24,7 +23,10 @@ export const SidebarData = [
     icon: <FaIcons.FaMap />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
-    subNav: [{}],
+    subNav: zupanije.map((zupanija) => ({
+      title: zupanija.name,
+      path: zupanija.id,
+    })),
   },
 
   {
