@@ -12,11 +12,7 @@ const Osoblje = () => {
   useEffect(() => {
     getOsoblje()
   }, [])
-  return (
-    <>
-      <h1>osoblje</h1>
-    </>
-  )
+  return <></>
 }
 
 export default Osoblje

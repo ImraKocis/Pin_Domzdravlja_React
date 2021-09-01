@@ -8,4 +8,7 @@
     require_once(CON_PATH.DS.'connection.php');
     require_once(MODELS_PATH.DS.'ordinacija.php');
     require_once(MODELS_PATH.DS.'osoblje.php');
+    require_once(MODELS_PATH.DS.'gradovi.php');
+    require_once(MODELS_PATH.DS.'zupanije.php');
+    require_once(MODELS_PATH.DS.'djelatnost.php');
 ?>

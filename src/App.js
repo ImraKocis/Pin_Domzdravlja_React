@@ -3,7 +3,7 @@ import { React, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Sidebar from './Navbar/sidebar'
 import Test from './pages/test'
-import Ordinacije from './komponente/ordinacije'
+import Ordinacije from './komponente/ordinacije/ordinacije'
 import Osoblje from './komponente/osoblje'
 
 function App() {

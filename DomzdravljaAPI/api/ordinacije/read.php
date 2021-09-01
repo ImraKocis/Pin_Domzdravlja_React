@@ -54,7 +54,8 @@
     }
 
     // Turn to JSON & output
-    echo json_encode($ordinacija_arr);
+    echo json_encode($ordinacija_arr); 
+    
 
   } else {
     // No ordinacija

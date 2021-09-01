@@ -9,27 +9,27 @@
   $database = new Database();
   $db = $database->connect();
 
-  $oZupanija = new Zupanija($db);
+  $oDjelatnost = new Djelatnost($db);
 
   try{
-   $result = $oZupanija->read();
+   $result = $oDjelatnost->read();
    $num = $result->rowCount();
 
    if($num >0){
-    $zupanija_arr = array();
+    $djelatnost_arr = array();
     $index = -1;
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
      extract($row);
-     $zupanija_item = array(
-      'id_zupanije'=> $id_zupanije,
-      'zupanija_naziv' => $zupanija_naziv
+     $djelatnost_item = array(
+      'id'=> $id,
+      'naziv_djelatnosti' => $naziv_djelatnosti
      );
-     array_push($zupanija_arr, $zupanija_item);
+     array_push($djelatnost_arr, $djelatnost_item);
     }
-    echo json_encode($zupanija_arr);
+    echo json_encode($djelatnost_arr);
    }else{
     echo json_encode(array(
-     'message' => 'Zupanije nisu pronadene'
+     'message' => 'Djelatnosti nisu pronadene'
     ));
    }
   }catch(Exception $e){
