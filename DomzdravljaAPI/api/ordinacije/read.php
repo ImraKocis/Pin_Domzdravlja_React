@@ -27,8 +27,11 @@
         'naziv_ordinacije' => $naziv_ordinacije,
         'opis' => html_entity_decode($opis),
         'grad_naziv' => $grad_naziv,
+        'id_grada' => $id_grada,
         'zupanija_naziv' => html_entity_decode($zupanija_naziv),
+        'id_zupanije' => $id_zupanije,
         'adresa' => $adresa,
+        'id_djelatnost' => $id_djelatnost,
         'naziv_djelatnosti' => $naziv_djelatnosti,
         'br_telefona' => $br_telefona,
         'email' => $email,
@@ -47,7 +50,7 @@
         'ime'=> $ime,
         'prezime'=> $prezime,
         'naziv_ordinacije'=> $naziv_ordinacije,
-        'naziv_djelatnosti'=> $naziv_djelatnosti,
+        'naziv_tipa'=> $naziv_tipa,
       );
       array_push($ordinacija_arr[$index]['zaposlenici'],$zaposlenici_item);
      }
