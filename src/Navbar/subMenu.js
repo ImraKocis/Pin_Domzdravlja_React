@@ -18,6 +18,25 @@ const SidebarLink = styled(Link)`
     cursor: pointer;
   }
 `
+const SidebarBtn = styled.button`
+  display: flex;
+  color: #e1e9fc;
+  width: fit-content;
+  background-color: transparent;
+  border: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  list-style: none;
+  height: 60px;
+  text-decoration: none;
+  font-size: 18px;
+  &:hover {
+    background: #252831;
+    border-left: 4px solid #632ce4;
+    cursor: pointer;
+  }
+`
 
 const SidebarLabel = styled.span`
   margin-left: 16px;
@@ -46,19 +65,35 @@ const SubMenu = ({ item }) => {
 
   return (
     <>
-      <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
-        <div>
-          {item.icon}
-          <SidebarLabel>{item.title}</SidebarLabel>
-        </div>
-        <div>
-          {item.subNav && subnav
-            ? item.iconOpened
-            : item.subNav
-            ? item.iconClosed
-            : null}
-        </div>
-      </SidebarLink>
+      {item.dropdown === true ? (
+        <SidebarBtn onClick={item.subNav && showSubnav}>
+          <div>
+            {item.icon}
+            <SidebarLabel>{item.title}</SidebarLabel>
+          </div>
+          <div className='arrow'>
+            {item.subNav && subnav
+              ? item.iconOpened
+              : item.subNav
+              ? item.iconClosed
+              : null}
+          </div>
+        </SidebarBtn>
+      ) : (
+        <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+          <div>
+            {item.icon}
+            <SidebarLabel>{item.title}</SidebarLabel>
+          </div>
+          <div>
+            {item.subNav && subnav
+              ? item.iconOpened
+              : item.subNav
+              ? item.iconClosed
+              : null}
+          </div>
+        </SidebarLink>
+      )}
       {subnav &&
         item.subNav.map((item, index) => {
           return (

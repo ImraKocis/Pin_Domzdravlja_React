@@ -2,6 +2,7 @@
   // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
+  header('Access-Control-Allow-Headers: POST');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../models/include.php';
@@ -9,35 +10,31 @@
   $database = new Database();
   $db = $database->connect();
 
-  $oOsoblje = new Zaposlenik($db);
+  $oLogin = new Login($db);
 
   try{
-   $result = $oOsoblje->read();
+   $result = $oLogin->read();
    $num = $result->rowCount();
 
-   if($num > 0){
-    $osoblje_arr = array();
-    
+   if($num >0){
+    $login_arr = array();
+    $index = -1;
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
      extract($row);
-
-     $osoblje_item = array(
-      'id'=> $id,
-      'tip' => $tip,
-      'naziv_tipa' => $naziv_tipa,
-      'naziv_ordinacije'=>$naziv_ordinacije,
+     $login_item = array(
+      'userId'=> $userId,
+      'userName' => $userName,
+      'userPassword' => $userPassword,
       'ime' => $ime,
-      'prezime' => $prezime,
-      'naziv_djelatnosti' => $naziv_djelatnosti,
-      'djelatnosti' => $djelatnosti,
-      'grad_naziv' => $grad_naziv
+      'prezime' => $prezime
      );
-
-     array_push($osoblje_arr, $osoblje_item);
+     array_push($login_arr, $login_item);
     }
-    echo json_encode($osoblje_arr);
+    echo json_encode($login_arr);
    }else{
-    echo json_encode(array('message'=>'Osoblje nije pornadeno'));
+    echo json_encode(array(
+     'message' => 'Podaci nisu pronadeni'
+    ));
    }
   }catch(Exception $e){
    echo json_encode(array('try_err'=> $e.getMessage()));

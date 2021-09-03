@@ -9,6 +9,7 @@
   public $naziv_tipa;
   public $naziv_ordinacije;
   public $naziv_djelatnosti;
+  public $djelatnost;
   public $ime;
   public $prezime;
 
@@ -17,7 +18,7 @@
   }
 
   public function read(){
-   $query = 'SELECT mo.id, mo.tip,mo.ime, mo.prezime, t.naziv_tipa,o.naziv_ordinacije,d.naziv_djelatnosti FROM medicinsko_osoblje mo LEFT JOIN tipovi t ON mo.tip = t.id LEFT JOIN ordinacije o ON mo.dom_zdravlja = o.id_dom_zdravlja LEFT JOIN djelatnosti d ON mo.djelatnosti = d.id';
+   $query = 'SELECT mo.id, mo.tip,mo.ime, mo.prezime, t.naziv_tipa,o.naziv_ordinacije,d.naziv_djelatnosti, mo.djelatnosti, g.grad_naziv FROM medicinsko_osoblje mo LEFT JOIN tipovi t ON mo.tip = t.id LEFT JOIN ordinacije o ON mo.dom_zdravlja = o.id_dom_zdravlja LEFT JOIN djelatnosti d ON mo.djelatnosti = d.id LEFT JOIN gradovi g ON g.id_grada = o.grad_id';
 
    $stmt = $this->conn->prepare($query);
    $stmt->execute();

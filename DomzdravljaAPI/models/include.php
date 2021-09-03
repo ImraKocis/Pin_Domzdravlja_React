@@ -11,4 +11,5 @@
     require_once(MODELS_PATH.DS.'gradovi.php');
     require_once(MODELS_PATH.DS.'zupanije.php');
     require_once(MODELS_PATH.DS.'djelatnost.php');
+    require_once(MODELS_PATH.DS.'login.php');
 ?>

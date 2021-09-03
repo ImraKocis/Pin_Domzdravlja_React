@@ -22,7 +22,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
 import './ordinacije.css'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 
 const url_ordinacije =
   'http://127.0.0.1/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/ordinacije/read.php'
@@ -101,7 +100,7 @@ function Row(props) {
             size='small'
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDown />}
+            {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell component='th' scope='row'>
@@ -252,10 +251,14 @@ export default function OrdinacijeAll() {
     setZupanija(id_zupanije)
     getGradovi(id_zupanije)
     setGradSelectDisabled(false)
-    setOrdinacije(
-      ordinacijeStatic.filter((data) => data.id_zupanije === id_zupanije)
-    )
-    setIsFilterActive(true)
+    if (id_zupanije === 'all') {
+      setIsFilterActive(false)
+    } else {
+      setOrdinacije(
+        ordinacijeStatic.filter((data) => data.id_zupanije === id_zupanije)
+      )
+      setIsFilterActive(true)
+    }
   }
 
   const handleChangeGrad = (id_grada) => {
@@ -276,7 +279,7 @@ export default function OrdinacijeAll() {
     const ordinacija = await res_ordinacija.json()
     setOrdinacije(ordinacija)
     setOrdinacijeStatic(ordinacija)
-    console.log(ordinacija[0].id_dom_zdravlja)
+    //console.log(ordinacija[0].id_dom_zdravlja)
   }
   useEffect(() => {
     getOrdinacije()
@@ -298,6 +301,7 @@ export default function OrdinacijeAll() {
             value={zupanija}
             onChange={(e) => handleChangeZupanija(e.target.value)}
           >
+            <MenuItem value='all'>Prikazi sve</MenuItem>
             {zupanije.map((zupanija) => {
               return (
                 <MenuItem

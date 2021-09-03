@@ -9,34 +9,39 @@ import * as RiIcons from 'react-icons/ri'
 export const SidebarData = [
   {
     title: 'Ordinacije',
-    path: '/komponente/ordinacije',
+    path: '/ordinacije',
     icon: <FaIcons.FaHospitalSymbol />,
   },
 
   {
     title: 'Osoblje',
-    path: '/team',
+    dropdown: true,
     icon: <IoIcons.IoMdPeople />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
         title: 'Opća obiteljska medicina',
-        path: '/reports/reports1',
+        path: '/osoblje/opca-obiteljska-medicina',
       },
       {
         title: 'Zdravstvena zaštita žena',
-        path: '/reports/reports1',
+        path: '/osoblje/zdravstvena-zastita-zena',
       },
       {
         title: 'Stomatologija',
-        path: '/reports/reports1',
+        path: '/osoblje/stomatologija',
       },
       {
         title: 'Pedijatrija',
-        path: '/reports/reports1',
+        path: '/osoblje/pedijatrija',
       },
     ],
+  },
+  {
+    title: 'Pregled djelatnosti',
+    path: '/djelatnost',
+    icon: <FaIcons.FaCity />,
   },
   {
     title: 'Statistika',
@@ -45,7 +50,7 @@ export const SidebarData = [
   },
   {
     title: 'Login',
-    path: '/support',
+    path: '/admin',
     icon: <FiIcons.FiLogIn />,
   },
 ]
