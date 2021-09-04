@@ -10,6 +10,7 @@ import OsobljeZZZ from './komponente/osoblje/osobljeZZZ'
 import OsobljeS from './komponente/osoblje/osobljeS'
 import Osoblje from './komponente/osoblje/osoblje'
 import Djelatnost from './komponente/djelatnosti/djelatnost'
+import Login from './komponente/login/login'
 
 function App() {
   return (
@@ -35,9 +36,9 @@ function App() {
           <Route path='/djelatnost' exact>
             <Djelatnost />
           </Route>
-          {/* <Route path='/djelatnost' exact>
-            <Djelatnost />
-          </Route> */}
+          <Route path='/admin' exact>
+            <Login />
+          </Route>
         </Switch>
       </Router>
     </>

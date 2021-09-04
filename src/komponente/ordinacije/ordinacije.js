@@ -226,13 +226,14 @@ export default function OrdinacijeAll() {
     setZupanije(zupanija)
   }
   const [gradovi, setGradovi] = useState([])
+  const [gradoviZupanije, setGradoviZupanije] = useState([])
   const [grad, setGrad] = useState('')
   const [gradSelectDisabled, setGradSelectDisabled] = useState(true)
-  const getGradovi = async (id_zupanije) => {
+  const getGradovi = async () => {
     const res_grad = await fetch(url_gradovi, requestOptions)
 
     const grad = await res_grad.json()
-    setGradovi(grad.filter((single) => single.id_zupanije == id_zupanije))
+    setGradovi(grad)
   }
   const [djelatnosti, setDjelatnosti] = useState([])
   const [djelatnost, setDjelatnost] = useState('all')
@@ -242,34 +243,67 @@ export default function OrdinacijeAll() {
     setDjelatnosti(djelatnost)
   }
 
+  const [djelatnostSelectListDisable, setDjelatnostSelectListDisable] =
+    useState(false)
+
   const handleChange = (e) => {
     // setZupanija(e.target.value)
     // setGrad(e.target.value)
     // setDjelatnost(e.target.value)
   }
+
   const handleChangeZupanija = (id_zupanije) => {
     setZupanija(id_zupanije)
-    getGradovi(id_zupanije)
+    setGradoviZupanije(
+      gradovi.filter((grad) => grad.id_zupanije === id_zupanije)
+    )
     setGradSelectDisabled(false)
     if (id_zupanije === 'all') {
       setIsFilterActive(false)
+      setGrad('')
+      setGradSelectDisabled(true)
+      setDjelatnost('')
     } else {
       setOrdinacije(
         ordinacijeStatic.filter((data) => data.id_zupanije === id_zupanije)
       )
       setIsFilterActive(true)
     }
+    if (grad === '' && id_zupanije !== 'all') {
+      setDjelatnost('')
+    }
   }
 
   const handleChangeGrad = (id_grada) => {
     setGrad(id_grada)
     setOrdinacije(ordinacijeStatic.filter((data) => data.id_grada === id_grada))
+
+    setDjelatnost('')
   }
   const hanldeChangeDjelatnost = (id) => {
     setDjelatnost(id)
-    setOrdinacije(ordinacije.filter((data) => data.id_djelatnost === id))
+
+    setOrdinacije(
+      zupanija === 'all'
+        ? ordinacijeStatic.filter(
+            (ordinacija) => ordinacija.id_djelatnost === id
+          )
+        : ordinacijeStatic.filter((ordinacija) => {
+            if (grad === '') {
+              return (
+                ordinacija.id_zupanije === zupanija &&
+                ordinacija.id_djelatnost === id
+              )
+            } else {
+              return (
+                ordinacija.id_zupanije === zupanija &&
+                ordinacija.id_djelatnost === id &&
+                ordinacija.id_grada === grad
+              )
+            }
+          })
+    )
     setIsFilterActive(true)
-    console.log(ordinacije)
   }
 
   const [ordinacije, setOrdinacije] = useState([])
@@ -284,7 +318,7 @@ export default function OrdinacijeAll() {
   useEffect(() => {
     getOrdinacije()
     getZupanije()
-    zupanije && getGradovi(1)
+    getGradovi()
     getDjelatnosti()
   }, [])
 
@@ -327,7 +361,7 @@ export default function OrdinacijeAll() {
             value={grad}
             onChange={(e) => handleChangeGrad(e.target.value)}
           >
-            {gradovi.map((grad) => {
+            {gradoviZupanije.map((grad) => {
               return (
                 <MenuItem key={grad.id_grada} value={grad.id_grada}>
                   {grad.grad_naziv}
@@ -342,10 +376,12 @@ export default function OrdinacijeAll() {
         <InputLabel id='lbl-djelatnost'></InputLabel>
         <Select
           disableUnderline
+          disabled={djelatnostSelectListDisable}
           labelId='lbl-djelatnost'
           id='djelatnost'
           value={djelatnost}
           onChange={(e) => hanldeChangeDjelatnost(e.target.value)}
+          options={djelatnosti}
         >
           {djelatnosti.map((djelatnost) => {
             return (

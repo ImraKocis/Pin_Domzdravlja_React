@@ -25,6 +25,9 @@
 
    return $stmt;
   }
+  public function readSingle(){
+    
+  }
   public function create(){
    $query = 'INSERT INTO ' .$this->table.' SET ime = :ime, prezime = :prezime, tip = :tip, dom_zdravlja = :dom_zdravlja, djelatnosti = :djelatnosti';
    
