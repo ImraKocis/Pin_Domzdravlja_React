@@ -13,17 +13,20 @@
   $oLogin = new Login($db);
 
 
- $data = json_decode(file_get_contents("php://input"));
+  $data = json_decode(file_get_contents("php://input"));
 
-if(!empty($data->userName) && !empty($data->userPassword))
-{
   $oLogin->userName = $data->userName;
   $oLogin->userPassword = $data->userPassword;
-
-    if($oLogin->Login())
-    {
-        echo json_encode(array('message' => 'Uspješno logiran!'));
-    }
+  
+try{
+  $loginResult = $oLogin->login();
+  echo json_encode($loginResult);
+}catch(Exception $e){
+  echo json_encode(array(
+    "message"=> "Doslo je do pogreske kod prijave",
+    "error" => $e->getMessage(),
+    "status" => "false"
+  ));
 }
 
 

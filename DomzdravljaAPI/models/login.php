@@ -22,24 +22,29 @@
    return $stmt;
   }
   
-  public function Login()
+  public function login()
   {
     $query = 'SELECT * FROM '. $this->table .' WHERE userName = ? AND userPassword = ?';
 
       $stmt = $this->conn->prepare($query);
-       $stmt->bindParam(1, $this->userName);
-       $stmt->bindParam(2, $this->userPassword);
+        $stmt->bindParam(1, $this->userName);
+        $stmt->bindParam(2, $this->userPassword);
 
       $stmt->execute();
 
-      var_dump($stmt->rowCount());
+      //var_dump($stmt->rowCount());
       if($stmt->rowCount() == 1)
       {
-       return true;
-      }
-
-      return false;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return array(
+          'userName' => $this->userName,
+          'id' => $row['userId'],
+          'ime'=> $row['ime'],
+          'prezime'=>$row['prezime']
+        );
+      }else{
+        throw new Exception("Krivo korisnicko ime ili lozinka!");
+      }  
   }
-
  }
 ?>

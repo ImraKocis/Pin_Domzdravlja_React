@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { SidebarData } from './data'
-
+import { SidebarDataWhenLoged } from './dataLoged'
+import { Button } from '@material-ui/core'
 import SubMenu from './subMenu'
 import { IconContext } from 'react-icons/lib'
 import './sidebar.css'
@@ -41,8 +42,7 @@ const SidebarNav = styled.nav`
 const SidebarWrap = styled.div`
   width: 100%;
 `
-
-const Sidebar = () => {
+const Sidebar = (props) => {
   const [sidebar, setSidebar] = useState(false)
 
   const showSidebar = () => setSidebar(!sidebar)
@@ -61,9 +61,26 @@ const Sidebar = () => {
               <AiIcons.AiOutlineClose onClick={showSidebar} />
             </NavIcon>
             <div className='nav-header'>Dom zdravlja</div>
-            {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />
-            })}
+            {console.log(props.user)}
+            {props.user !== null
+              ? SidebarDataWhenLoged.map((item, index) => {
+                  return <SubMenu item={item} key={index} />
+                })
+              : SidebarData.map((item, index) => {
+                  return <SubMenu item={item} key={index} />
+                })}
+            {props.user !== null ? (
+              <Button
+                className='sidebarBtn'
+                color='primary'
+                variant='contained'
+                onClick={props.logOut}
+              >
+                Logout
+              </Button>
+            ) : (
+              ''
+            )}
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>

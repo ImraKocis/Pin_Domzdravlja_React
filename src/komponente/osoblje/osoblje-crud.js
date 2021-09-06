@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -8,8 +9,11 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import IconButton from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
 import { Delete, Edit } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
+import Login from '../login/login'
 
 const useStyles = makeStyles({
   table: {
@@ -22,7 +26,7 @@ const useStyles = makeStyles({
 })
 const url =
   'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/osoblje/read.php'
-const Osoblje = () => {
+const Osoblje = (props) => {
   const [osoblje, setOsoblje] = useState([])
   const getOsoblje = async () => {
     const res = await fetch(url)
@@ -40,7 +44,7 @@ const Osoblje = () => {
   function handleAlert(id) {
     confirmAlert({
       title: 'Obrisati?',
-      message: 'Sigurno zelite obrisati ovoga zaposlenika?',
+      message: 'Sigurno zelite obrisati ovoga djelatnika?',
       buttons: [
         {
           label: 'Da',
@@ -87,45 +91,57 @@ const Osoblje = () => {
 
   return (
     <>
-      <TableContainer className={classes.table} component={Paper}>
-        <Table aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell align='right'>Ime</TableCell>
-              <TableCell align='right'>Prezime</TableCell>
-              <TableCell align='right'>Ordinacija</TableCell>
-              <TableCell align='right'>Tip</TableCell>
-              <TableCell align='right'>Grad</TableCell>
-              <TableCell align='right'>Ažuriraj</TableCell>
-              <TableCell align='right'>Obriši</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {osoblje.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell component='th' scope='row'>
-                  {row.id}
-                </TableCell>
-                <TableCell align='right'>{row.ime}</TableCell>
-                <TableCell align='right'>{row.prezime}</TableCell>
-                <TableCell align='right'>{row.naziv_ordinacije}</TableCell>
-                <TableCell align='right'>{row.naziv_tipa}</TableCell>
-                <TableCell align='right'>{row.grad_naziv}</TableCell>
-                <TableCell></TableCell>
-                <TableCell>
-                  <IconButton
-                    onClick={() => handleAlert(row.id)}
-                    color='secondary'
-                  >
-                    <Delete />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {props.user !== null ? (
+        <Grid container>
+          <TableContainer className={classes.table} component={Paper}>
+            <Table aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Id</TableCell>
+                  <TableCell align='right'>Ime</TableCell>
+                  <TableCell align='right'>Prezime</TableCell>
+                  <TableCell align='right'>Ordinacija</TableCell>
+                  <TableCell align='right'>Tip</TableCell>
+                  <TableCell align='right'>Grad</TableCell>
+                  <TableCell align='right'>Ažuriraj</TableCell>
+                  <TableCell align='right'>Obriši</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {osoblje.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell component='th' scope='row'>
+                      {row.id}
+                    </TableCell>
+                    <TableCell align='right'>{row.ime}</TableCell>
+                    <TableCell align='right'>{row.prezime}</TableCell>
+                    <TableCell align='right'>{row.naziv_ordinacije}</TableCell>
+                    <TableCell align='right'>{row.naziv_tipa}</TableCell>
+                    <TableCell align='right'>{row.grad_naziv}</TableCell>
+                    <TableCell>
+                      <Link to={'/osoblje/azuriraj/id/' + row.id}>
+                        <IconButton collor='primary'>
+                          <Edit />
+                        </IconButton>
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        onClick={() => handleAlert(row.id)}
+                        color='secondary'
+                      >
+                        <Delete />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      ) : (
+        <Login user={props.user} Success={props.handleSuccessLogin} />
+      )}
     </>
   )
 }

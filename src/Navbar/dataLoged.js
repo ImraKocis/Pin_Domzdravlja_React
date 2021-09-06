@@ -6,7 +6,7 @@ import * as IoIcons from 'react-icons/io'
 import * as ImIcons from 'react-icons/im'
 import * as RiIcons from 'react-icons/ri'
 
-export const SidebarData = [
+export const SidebarDataWhenLoged = [
   {
     title: 'Ordinacije',
     path: '/ordinacije',
@@ -49,9 +49,8 @@ export const SidebarData = [
     icon: <ImIcons.ImStatsDots />,
   },
   {
-    title: 'Login',
-    path: '/admin-login',
-    isLoged: false,
+    title: 'Administracija',
+    path: '/administracija',
     icon: <FiIcons.FiLogIn />,
   },
 ]

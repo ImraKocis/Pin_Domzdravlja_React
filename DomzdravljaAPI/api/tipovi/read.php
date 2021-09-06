@@ -1,5 +1,5 @@
-<?php 
-  // Headers
+<?php
+ // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
@@ -9,30 +9,29 @@
   $database = new Database();
   $db = $database->connect();
 
-  $oGrad = new Grad($db);
+  $oTip = new Tip($db);
 
   try{
-   $result = $oGrad->read();
+   $result = $oTip->read();
    $num = $result->rowCount();
 
    if($num >0){
-    $grad_arr = array();
+    $tip_arr = array();
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
      extract($row);
-     $grad_item = array(
-      'id_grada'=> $id_grada,
-      'grad_naziv' => $grad_naziv,
-      'id_zupanije' => $id_zupanije
+     $tip_item = array(
+      'id'=> $id,
+      'naziv_tipa' => $naziv_tipa
      );
-     array_push($grad_arr, $grad_item);
+     array_push($tip_arr, $tip_item);
     }
-    echo json_encode($grad_arr);
+    echo json_encode($tip_arr);
    }else{
     echo json_encode(array(
-     'message' => 'Gradovi nisu pronadeni'
+     'message' => 'Tipovi nisu pronadeni'
     ));
    }
   }catch(Exception $e){
    echo json_encode(array('try_err'=> $e.getMessage()));
   };
-  
+?>

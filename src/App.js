@@ -10,13 +10,35 @@ import OsobljeZZZ from './komponente/osoblje/osobljeZZZ'
 import OsobljeS from './komponente/osoblje/osobljeS'
 import Osoblje from './komponente/osoblje/osoblje'
 import Djelatnost from './komponente/djelatnosti/djelatnost'
-import Login from './komponente/login/login'
+import Login from './komponente/login/auth'
+import OsobljeAdmin from './komponente/osoblje/osoblje-crud'
+import { createBrowserHistory } from 'history'
+const history = createBrowserHistory()
 
+function redirect() {
+  history.push('/ordinacije')
+}
 function App() {
+  const [user, setUser] = useState(null)
+
+  function handleSuccessLogin(data) {
+    setUser({
+      userName: data.userName,
+      ime: data.ime,
+      prezime: data.prezime,
+      userId: data.userId,
+      isLoged: true,
+    })
+    redirect()
+  }
+  function LogOut() {
+    setUser(null)
+    redirect()
+  }
   return (
     <>
-      <Router>
-        <Sidebar />
+      <Router history={history}>
+        <Sidebar logOut={LogOut} user={user} />
         <Switch>
           <Route path='/ordinacije' exact>
             <Ordinacije></Ordinacije>
@@ -36,8 +58,11 @@ function App() {
           <Route path='/djelatnost' exact>
             <Djelatnost />
           </Route>
-          <Route path='/admin' exact>
-            <Login />
+          <Route path='/admin-login' exact>
+            <Login user={user} Success={handleSuccessLogin} />
+          </Route>
+          <Route path='/administracija' exact>
+            <OsobljeAdmin user={user} handleSuccessLogin={handleSuccessLogin} />
           </Route>
         </Switch>
       </Router>

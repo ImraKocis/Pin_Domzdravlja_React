@@ -23,6 +23,7 @@
 
      $osoblje_item = array(
       'id'=> $id,
+      'sifra'=> $sifra,
       'tip' => $tip,
       'naziv_tipa' => $naziv_tipa,
       'naziv_ordinacije'=>$naziv_ordinacije,
