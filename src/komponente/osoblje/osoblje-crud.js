@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton'
 import { Delete, Edit } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import Login from '../login/login'
+import { Button, Container } from '@material-ui/core'
+import './osoblje.css'
 
 const useStyles = makeStyles({
   table: {
@@ -92,9 +94,9 @@ const Osoblje = (props) => {
   return (
     <>
       {props.user !== null ? (
-        <Grid container>
+        <Container maxWidth='lg'>
           <TableContainer className={classes.table} component={Paper}>
-            <Table aria-label='simple table'>
+            <Table className='test' aria-label='table'>
               <TableHead>
                 <TableRow>
                   <TableCell>Id</TableCell>
@@ -138,7 +140,7 @@ const Osoblje = (props) => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
+        </Container>
       ) : (
         <Login user={props.user} Success={props.handleSuccessLogin} />
       )}

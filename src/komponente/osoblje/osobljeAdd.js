@@ -1,9 +1,13 @@
 import { React, useState, useEffect } from 'react'
 import Login from '../login/login'
-import useForm from './useEditForm'
-import validate from './validateEditData'
+import useForm from './useAddForm'
+import validate from './validateAddData'
 import './osoblje.css'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import {
   Paper,
   Grid,
@@ -14,26 +18,14 @@ import {
   Select,
   InputLabel,
   MenuItem,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
 } from '@material-ui/core'
+import { KeyboardArrowDown } from '@material-ui/icons'
 
-export default function OsobljeEdit(props) {
-  const { id } = useParams()
+export default function OsobljeAdd(props) {
   const [successMessage, setSuccessMessage] = useState('')
   const [ordinacije, setOrdinacije] = useState([])
   const [tipovi, setTipovi] = useState([])
-  const [update, setUpdate] = useState(1)
-  const [checked, setChecked] = useState(false)
-  const [disableSelect, setDisableSelect] = useState(false)
-  const [disableCheckbox, setDisableCheckbox] = useState(false)
-
-  function handleChangeCheckbox(e) {
-    setChecked(e.target.checked)
-    setDisableSelect(!disableSelect)
-    values.naziv_ordinacije = ''
-  }
+  const [open, setOpen] = useState(false)
 
   function Success(message) {
     setSuccessMessage(message)
@@ -66,39 +58,12 @@ export default function OsobljeEdit(props) {
     )
       .then((response) => response.json())
       .then((data) => setTipovi(data))
-
-    fetch(
-      'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/osoblje/readSingle.php?id=' +
-        id,
-      {
-        method: 'GET',
-        headers: myHeaders,
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        handleExistingValues(data)
-      })
   }, [])
 
   const { handleChange, values, handleSubmit, errors } = useForm(
     validate,
-    id,
     Success
   )
-
-  const handleExistingValues = (data) => {
-    values.ime = data.ime
-    values.prezime = data.prezime
-    values.naziv_tipa = data.tip
-    values.naziv_ordinacije = data.dom_zdravlja + ',' + data.djelatnosti
-    if (data.dom_zdravlja == 0) {
-      setDisableCheckbox(true)
-    }
-    //console.log(values.naziv_ordinacije)
-    //values.naziv_djelatnosti = data.naziv_djelatnosti
-    setUpdate(update + 1)
-  }
 
   return (
     <>
@@ -109,7 +74,6 @@ export default function OsobljeEdit(props) {
               <Grid className='gridClass' container spacing={3}>
                 <Grid item xs>
                   <TextField
-                    //fullWidth='true'
                     type='text'
                     name='ime'
                     variant='outlined'
@@ -126,7 +90,6 @@ export default function OsobljeEdit(props) {
                 </Grid>
                 <Grid item xs>
                   <TextField
-                    //fullWidth='true'
                     type='text'
                     name='prezime'
                     variant='outlined'
@@ -142,65 +105,25 @@ export default function OsobljeEdit(props) {
                   )}
                 </Grid>
                 <Grid item xs>
-                  {ordinacije && (
-                    <>
-                      <FormGroup row>
-                        <FormControl
-                          variant='outlined'
-                          className='selectEditOrdinacije'
-                        >
-                          <InputLabel id='labelOrdinacija'>
-                            Ordinacija
-                          </InputLabel>
-                          <Select
-                            labelId='labelOrdinacija'
-                            disabled={disableSelect}
-                            name='naziv_ordinacije'
-                            value={values.naziv_ordinacije}
-                            onChange={handleChange}
-                            label='Ordinacija'
-                          >
-                            {ordinacije.map((ordinacija, index) => (
-                              <MenuItem
-                                key={index}
-                                value={
-                                  ordinacija.id_dom_zdravlja +
-                                  ',' +
-                                  ordinacija.id_djelatnost
-                                }
-                              >
-                                {ordinacija.naziv_ordinacije}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                        <section className='checkBox'>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                color='primary'
-                                checked={checked}
-                                onChange={handleChangeCheckbox}
-                                disabled={disableCheckbox}
-                              />
-                            }
-                            label='Otpusti'
-                            labelPlacement='end'
-                          ></FormControlLabel>
-                        </section>
-                      </FormGroup>
-                      {errors.ordinacija && (
-                        <FormHelperText className='helperText'>
-                          {errors.ordinacija}
-                        </FormHelperText>
-                      )}
-                    </>
+                  <TextField
+                    type='text'
+                    name='sifra'
+                    variant='outlined'
+                    label='Sifra djelatnika'
+                    className='input'
+                    value={values.sifra}
+                    onChange={handleChange}
+                  />
+                  {errors.sifra && (
+                    <FormHelperText className='helperText'>
+                      {errors.sifra}
+                    </FormHelperText>
                   )}
                 </Grid>
                 <Grid item xs>
                   {tipovi && (
                     <>
-                      <FormControl variant='outlined' className='selectEdit'>
+                      <FormControl variant='outlined' className='selectTip'>
                         <InputLabel id='labelTipovi'>Tip</InputLabel>
                         <Select
                           labelId='labelTipovi'
@@ -224,6 +147,50 @@ export default function OsobljeEdit(props) {
                     </>
                   )}
                 </Grid>
+                <IconButton
+                  aria-label='expand-form'
+                  size='small'
+                  onClick={() => setOpen(!open)}
+                >
+                  Zaposli{' '}
+                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </IconButton>
+                <Collapse in={open} timeout='auto' unmountOnExit>
+                  <Grid item xs>
+                    {ordinacije && (
+                      <>
+                        <FormControl
+                          variant='outlined'
+                          className='selectOrdinacija'
+                        >
+                          <InputLabel id='labelOrdinacija'>
+                            Ordinacija
+                          </InputLabel>
+                          <Select
+                            labelId='labelOrdinacija'
+                            name='naziv_ordinacije'
+                            value={values.naziv_ordinacije}
+                            onChange={handleChange}
+                            label='Ordinacija'
+                          >
+                            {ordinacije.map((ordinacija, index) => (
+                              <MenuItem
+                                key={index}
+                                value={
+                                  ordinacija.id_dom_zdravlja +
+                                  ',' +
+                                  ordinacija.id_djelatnost
+                                }
+                              >
+                                {ordinacija.naziv_ordinacije}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </>
+                    )}
+                  </Grid>
+                </Collapse>
                 <Link id='redirect' to='/djelatnost' />
                 <Button
                   id='submitButton'
@@ -232,7 +199,7 @@ export default function OsobljeEdit(props) {
                   color='primary'
                   className='input'
                 >
-                  Azuriraj
+                  Dodaj djelatnika
                 </Button>
                 {successMessage && (
                   <FormHelperText className='successText'>

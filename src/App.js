@@ -12,7 +12,10 @@ import Osoblje from './komponente/osoblje/osoblje'
 import Djelatnost from './komponente/djelatnosti/djelatnost'
 import Login from './komponente/login/auth'
 import OsobljeAdmin from './komponente/osoblje/osoblje-crud'
+import OsobljeEdit from './komponente/osoblje/osobljeEdit'
 import { createBrowserHistory } from 'history'
+import OsobljeAdd from './komponente/osoblje/osobljeAdd'
+import Statistika from './komponente/statistika/statistika'
 const history = createBrowserHistory()
 
 function redirect() {
@@ -63,6 +66,15 @@ function App() {
           </Route>
           <Route path='/administracija' exact>
             <OsobljeAdmin user={user} handleSuccessLogin={handleSuccessLogin} />
+          </Route>
+          <Route path='/osoblje/azuriraj/id/:id' exact>
+            <OsobljeEdit user={user} />
+          </Route>
+          <Route path='/administracija/dodaj' exact>
+            <OsobljeAdd user={user} />
+          </Route>
+          <Route path='/statistika' exact>
+            <Statistika user={user} />
           </Route>
         </Switch>
       </Router>

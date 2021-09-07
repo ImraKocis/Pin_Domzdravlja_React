@@ -15,13 +15,13 @@
    $result = $oOrdinacije->read();
    $num = $result->rowCount();
 
-   if($num > 0) {
+    if($num > 0) {
     // ordinacija array
     $ordinacija_arr = array();
     $index = -1;
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
       extract($row);
-     if(!in_array($id_dom_zdravlja, array_column($ordinacija_arr, 'id_dom_zdravlja'))){
+    if(!in_array($id_dom_zdravlja, array_column($ordinacija_arr, 'id_dom_zdravlja'))){
       $ordinacija_item = array(
         'id_dom_zdravlja' => $id_dom_zdravlja,
         'naziv_ordinacije' => $naziv_ordinacije,
@@ -42,10 +42,11 @@
 
       // Push to "data"
       array_push($ordinacija_arr, $ordinacija_item);
-     }
-     if(!array_search($id_dom_zdravlja,array_column($ordinacija_arr, 'id_dom_zdravlja'))){
-       $index = array_search($id_dom_zdravlja,array_column($ordinacija_arr, 'id_dom_zdravlja'));
-       $zaposlenici_item = array(
+    }
+     //if(!array_search($id_dom_zdravlja,array_column($ordinacija_arr, 'id_dom_zdravlja'))){
+      if($id != null){
+        $index = array_search($id_dom_zdravlja,array_column($ordinacija_arr, 'id_dom_zdravlja'));
+      $zaposlenici_item = array(
         'id'=> $id,
         'ime'=> $ime,
         'prezime'=> $prezime,
@@ -53,7 +54,9 @@
         'naziv_tipa'=> $naziv_tipa,
       );
       array_push($ordinacija_arr[$index]['zaposlenici'],$zaposlenici_item);
-     }
+       }
+       
+     //}
     }
 
     // Turn to JSON & output

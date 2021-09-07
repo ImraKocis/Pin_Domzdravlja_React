@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-const useForm = (validate, id, Success) => {
+const useForm = (validate, Success) => {
   const [values, setValues] = useState({
     ime: '',
     prezime: '',
+    sifra: '',
     naziv_tipa: '',
     naziv_ordinacije: '',
   })
@@ -19,18 +20,24 @@ const useForm = (validate, id, Success) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     var error = validate(values)
-
     let requestOptions = {}
-    //console.log(arr[0], arr[1])
+    console.log(
+      values.ime,
+      values.prezime,
+      values.sifra,
+      values.naziv_tipa,
+      'ordinacija: ',
+      values.naziv_ordinacije
+    )
     if (Object.keys(error).length === 0) {
-      if (values.naziv_ordinacije === '') {
+      if (values.naziv_ordinacije == '') {
         requestOptions = {
-          method: 'PUT',
+          method: 'POST',
           headers: { 'Content-Type': 'aplication/json' },
           body: JSON.stringify({
-            id: id,
             ime: values.ime,
             prezime: values.prezime,
+            sifra: values.sifra,
             tip: values.naziv_tipa,
             dom_zdravlja: 0,
             djelatnosti: 0,
@@ -39,12 +46,12 @@ const useForm = (validate, id, Success) => {
       } else {
         var arr = values.naziv_ordinacije.split(',')
         requestOptions = {
-          method: 'PUT',
+          method: 'POST',
           headers: { 'Content-Type': 'aplication/json' },
           body: JSON.stringify({
-            id: id,
             ime: values.ime,
             prezime: values.prezime,
+            sifra: values.sifra,
             tip: values.naziv_tipa,
             dom_zdravlja: arr[0],
             djelatnosti: arr[1],
@@ -53,7 +60,7 @@ const useForm = (validate, id, Success) => {
       }
 
       fetch(
-        'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/osoblje/update.php',
+        'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/osoblje/create.php',
         requestOptions
       )
         .then((response) => response.json())

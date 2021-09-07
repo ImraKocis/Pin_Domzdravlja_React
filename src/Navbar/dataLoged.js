@@ -1,10 +1,11 @@
 //import React, { useState, useEffect } from 'react'
 import * as FaIcons from 'react-icons/fa'
 import * as FiIcons from 'react-icons/fi'
-import * as AiIcons from 'react-icons/ai'
+import * as TiIcons from 'react-icons/ti'
 import * as IoIcons from 'react-icons/io'
 import * as ImIcons from 'react-icons/im'
 import * as RiIcons from 'react-icons/ri'
+import * as FcIcons from 'react-icons/fc'
 
 export const SidebarDataWhenLoged = [
   {
@@ -45,12 +46,17 @@ export const SidebarDataWhenLoged = [
   },
   {
     title: 'Statistika',
-    path: '/messages',
+    path: '/statistika',
     icon: <ImIcons.ImStatsDots />,
   },
   {
     title: 'Administracija',
     path: '/administracija',
-    icon: <FiIcons.FiLogIn />,
+    icon: <FcIcons.FcManager />,
+  },
+  {
+    title: 'Dodaj djelatnika',
+    path: '/administracija/dodaj',
+    icon: <TiIcons.TiUserAdd />,
   },
 ]

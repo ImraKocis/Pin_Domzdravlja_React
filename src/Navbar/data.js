@@ -45,7 +45,7 @@ export const SidebarData = [
   },
   {
     title: 'Statistika',
-    path: '/messages',
+    path: '/statistika',
     icon: <ImIcons.ImStatsDots />,
   },
   {

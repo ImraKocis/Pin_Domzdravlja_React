@@ -20,7 +20,7 @@
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
      extract($row);
      $tip_item = array(
-      'id'=> $id,
+      'id_tipa'=> $id_tipa,
       'naziv_tipa' => $naziv_tipa
      );
      array_push($tip_arr, $tip_item);

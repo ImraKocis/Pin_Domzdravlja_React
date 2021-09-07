@@ -3,7 +3,7 @@
   private $conn;
   private $table='tipovi';
 
-  public $id;
+  public $id_tipa;
   public $naziv_tipa;
 
   public function __construct($db){

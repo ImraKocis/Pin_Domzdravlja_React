@@ -23,6 +23,7 @@
     'naziv_tipa'=>$oOsoba->naziv_tipa,
     'naziv_ordinacije'=>$oOsoba->naziv_ordinacije,
     'naziv_djelatnosti'=>$oOsoba->naziv_djelatnosti,
+    'dom_zdravlja'=>$oOsoba->dom_zdravlja,
     'djelatnosti'=>$oOsoba->djelatnosti,
     'ime'=>$oOsoba->ime,
     'prezime'=>$oOsoba->prezime,

@@ -28,7 +28,7 @@
   public function read(){
    //query
 
-   $query = 'SELECT o.id_dom_zdravlja, o.naziv_ordinacije, o.opis, o.adresa, o.br_telefona, o.email, o.radno_vrijeme, o.napomena, g.grad_naziv, g.id_grada, z.zupanija_naziv, z.id_zupanije, o.id_djelatnost ,d.naziv_djelatnosti,mo.id, mo.ime, mo.prezime, t.naziv_tipa FROM ordinacije o LEFT JOIN zupanije z ON o.zupanija_id = z.id_zupanije LEFT JOIN gradovi g ON g.id_grada = o.grad_id LEFT JOIN djelatnosti d ON d.id = o.id_djelatnost LEFT JOIN medicinsko_osoblje mo ON o.id_dom_zdravlja = mo.dom_zdravlja LEFT JOIN tipovi t ON mo.tip = t.id';
+   $query = 'SELECT o.id_dom_zdravlja, o.naziv_ordinacije, o.opis, o.adresa, o.br_telefona, o.email, o.radno_vrijeme, o.napomena, g.grad_naziv, g.id_grada, z.zupanija_naziv, z.id_zupanije, o.id_djelatnost ,d.naziv_djelatnosti,mo.id, mo.ime, mo.prezime, t.naziv_tipa FROM ordinacije o LEFT JOIN zupanije z ON o.zupanija_id = z.id_zupanije LEFT JOIN gradovi g ON g.id_grada = o.grad_id LEFT JOIN djelatnosti d ON d.id = o.id_djelatnost LEFT JOIN medicinsko_osoblje mo ON o.id_dom_zdravlja = mo.dom_zdravlja LEFT JOIN tipovi t ON mo.tip = t.id_tipa';
    
    $stmt = $this->conn->prepare($query);
    $stmt->execute();
@@ -51,9 +51,4 @@
     return false;
    }
   }
-
-  public function update(){
-   //$query = 'UPDATE '. $this->table . ' SET naziv_ordinacije = :naziv_ordinacije, opis = :opis, grad_id = :grad_id, zupanija_id = :zupanija_id, adresa = :adresa, id_djelatnost = :id_djelatnost, br_telefona = :br_telefona, emial = :email, radno_vrijeme = :ra'
-  }
-
  }

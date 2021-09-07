@@ -15,13 +15,18 @@
  
  $oOsoblje->ime = $data->ime;
  $oOsoblje->prezime = $data->prezime;
+ $oOsoblje->sifra = $data->sifra;
  $oOsoblje->tip = $data->tip;
  $oOsoblje->dom_zdravlja = $data->dom_zdravlja;
  $oOsoblje->djelatnosti = $data->djelatnosti;
-
- if($oOsoblje->create()){
+ try{
+  $oOsoblje->create();
   echo json_encode(array('message' => 'Osoba uspjesno kreirana'));
- }else{
-  echo json_encode(array('message' => 'Osoba neuspjesno kreirana'));
+ }catch(Exception $e){
+  echo json_encode(array(
+   'message' => 'Doslo je do pogreske kod dodavanja novoga djelatnika.',
+   'error' => $e.getMessage()
+ ));
  }
+ 
 ?>
