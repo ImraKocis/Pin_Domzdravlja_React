@@ -2,20 +2,21 @@ import './App.css'
 import { React, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Sidebar from './Navbar/sidebar'
-import Test from './pages/test'
+
 import Ordinacije from './komponente/ordinacije/ordinacije'
 import OsobljeOOM from './komponente/osoblje/osobljeOOM'
 import OsobljeP from './komponente/osoblje/osobljeP'
 import OsobljeZZZ from './komponente/osoblje/osobljeZZZ'
 import OsobljeS from './komponente/osoblje/osobljeS'
 import Osoblje from './komponente/osoblje/osoblje'
-import Djelatnost from './komponente/djelatnosti/djelatnost'
 import Login from './komponente/login/auth'
 import OsobljeAdmin from './komponente/osoblje/osoblje-crud'
 import OsobljeEdit from './komponente/osoblje/osobljeEdit'
 import { createBrowserHistory } from 'history'
 import OsobljeAdd from './komponente/osoblje/osobljeAdd'
 import Statistika from './komponente/statistika/statistika'
+import Test from './komponente/djelatnosti/test'
+import Djelatnost from './komponente/djelatnosti/djelatnost'
 const history = createBrowserHistory()
 
 function redirect() {

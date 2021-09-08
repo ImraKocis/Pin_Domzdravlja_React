@@ -15,8 +15,6 @@ import Login from '../login/login'
 import { Container } from '@material-ui/core'
 import { confirmAlert } from 'react-confirm-alert'
 import '../../komponente/osoblje/osoblje.css'
-import '../login/auth.css'
-import 'react-confirm-alert/src/react-confirm-alert.css'
 import {
   Delete,
   Edit,

@@ -6,6 +6,7 @@ import { FormHelperText } from '@material-ui/core'
 import useForm from './useForm'
 
 import './auth.css'
+import { Link } from 'react-router-dom'
 
 const validateInfo = (values) => {
   let errors = {}
@@ -20,6 +21,7 @@ const validateInfo = (values) => {
 
 const Login = (props) => {
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const Failed = (error) => {
     setError(error)
   }
@@ -29,6 +31,13 @@ const Login = (props) => {
     props.Success,
     Failed
   )
+  function Success(message) {
+    setSuccessMessage(message)
+    document.getElementById('submitButton').disabled = true
+    setTimeout(() => {
+      document.getElementById('redirect').click()
+    }, 2000)
+  }
 
   return (
     <>
@@ -68,6 +77,7 @@ const Login = (props) => {
             )}
             <Button
               type='submit'
+              id='submitButton'
               variant='contained'
               color='primary'
               className='input'
@@ -75,6 +85,12 @@ const Login = (props) => {
             >
               Prijavi se
             </Button>
+            <Link id='redirect' to='/administracija' />
+            {successMessage && (
+              <FormHelperText className='successText'>
+                {successMessage}
+              </FormHelperText>
+            )}
           </form>
         </div>
       </div>

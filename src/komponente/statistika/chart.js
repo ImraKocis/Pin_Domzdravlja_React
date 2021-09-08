@@ -1,6 +1,6 @@
 import { React, useState, useCallback } from 'react'
 
-function GetAllData(ordinacije, gradovi, djelatnosti) {
+const GetAllData = (ordinacije, gradovi, djelatnosti) => {
   var brOrdinacija = 0
   var dataObj = [] // cijeli
   var djelatnostiObj = {}
@@ -9,6 +9,7 @@ function GetAllData(ordinacije, gradovi, djelatnosti) {
     djelatnostiObj = {
       id_djelatnost: djelatnost.id,
       naziv_djelatnosti: djelatnost.naziv_djelatnosti,
+      array_gradovi: [],
     }
     gradovi.forEach((grad) => {
       brOrdinacija = 0
@@ -19,12 +20,18 @@ function GetAllData(ordinacije, gradovi, djelatnosti) {
           }
         }
       })
-      gradoviArr.push({ name: grad.grad_naziv, value: brOrdinacija })
+      djelatnostiObj['array_gradovi'].push({
+        name: grad.grad_naziv,
+        value: brOrdinacija,
+      })
     })
-    dataObj.push(djelatnostiObj, gradoviObj)
+    //djelatnostiObj['array_gradovi'].push(gradoviArr)
+    dataObj.push(djelatnostiObj)
     djelatnostiObj = {}
-    gradoviObj = []
+    gradoviArr = []
   })
+  console.log(dataObj)
+  return dataObj
 }
 
 // const getDataOOM = (ordinacijeData, gradData) => {

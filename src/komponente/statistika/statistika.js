@@ -14,6 +14,7 @@ import {
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { React, useState, useEffect } from 'react'
+import './statistika.css'
 function Row(props) {
   const { row } = props
   const [open, setOpen] = useState(false)
@@ -72,7 +73,8 @@ export default function Statistika(props) {
 
   const [data, setData] = useState([])
 
-  function GetAllData(ordinacije, gradovi, djelatnosti) {
+  function GetAllData(ordinacije1, gradovi, djelatnosti) {
+    console.log('GetAllData')
     var brOrdinacija = 0
     var dataObj = [] // cijeli
     var djelatnostiObj = {}
@@ -85,7 +87,7 @@ export default function Statistika(props) {
       }
       gradovi.forEach((grad) => {
         brOrdinacija = 0
-        ordinacije.forEach((ordinacija) => {
+        ordinacije1.forEach((ordinacija) => {
           if (ordinacija.id_djelatnost == djelatnost.id) {
             if (ordinacija.id_grada == grad.id_grada) {
               brOrdinacija++
@@ -104,63 +106,83 @@ export default function Statistika(props) {
     })
     console.log(dataObj)
     setData(dataObj)
+    // setData(dataObj)
   }
 
   const myHeaders = new Headers()
   myHeaders.append('Content-Type', 'application/json')
 
   useEffect(() => {
-    fetch(
-      'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/ordinacije/read.php',
-      {
-        method: 'GET',
-        headers: myHeaders,
+    const ordinacijePromise = new Promise((resolve) => {
+      fetch(
+        'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/ordinacije/read.php',
+        {
+          method: 'GET',
+          headers: myHeaders,
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          resolve(data)
+        })
+    })
+
+    const djelatnostiPromise = new Promise((resolve) => {
+      fetch(
+        'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/djelatnost/read.php',
+        {
+          method: 'GET',
+          headers: myHeaders,
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => resolve(data))
+    })
+
+    const gradoviPromise = new Promise((resolve) => {
+      fetch(
+        'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/gradovi/read.php',
+        {
+          method: 'GET',
+          headers: myHeaders,
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => resolve(data))
+    })
+
+    Promise.all([ordinacijePromise, gradoviPromise, djelatnostiPromise]).then(
+      (values) => {
+        GetAllData(values[0], values[1], values[2])
       }
     )
-      .then((response) => response.json())
-      .then((data) => setOrdinacije(data))
 
-    fetch(
-      'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/djelatnost/read.php',
-      {
-        method: 'GET',
-        headers: myHeaders,
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => setDjelatnosti(data))
-
-    fetch(
-      'http://localhost/Pin_Domzdravlja_1.0/domzdravlja/DomzdravljaAPI/api/gradovi/read.php',
-      {
-        method: 'GET',
-        headers: myHeaders,
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => setGradovi(data))
-
-    GetAllData(ordinacije, gradovi, djelatnosti)
+    // }).then((value) => {
+    //   console.log(value)
+    //   setData(GetAllData(ordinacije, gradovi, djelatnosti))
+    // })
   }, [])
 
   return (
     <>
-      <TableContainer className='table-main' component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell>Redni broj</TableCell>
-              <TableCell>Djelatnost</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row, index) => (
-              <Row key={index} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {data && (
+        <TableContainer className='table-main-statistika' component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>Redni broj </TableCell>
+                <TableCell>Djelatnost</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row, index) => (
+                <Row key={index} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </>
   )
 }
