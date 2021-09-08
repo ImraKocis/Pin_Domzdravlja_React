@@ -192,7 +192,7 @@ export default function Djelatnost() {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
+              <TableCell>R. br.</TableCell>
               <TableCell align='right'>Ime</TableCell>
               <TableCell align='right'>Prezime</TableCell>
               <TableCell align='right'>Ordinacija</TableCell>
@@ -208,10 +208,10 @@ export default function Djelatnost() {
                       page * rowsPerPage + rowsPerPage
                     )
                   : osobljeStatic
-                ).map((row) => (
+                ).map((row, index) => (
                   <TableRow key={row.id}>
                     <TableCell component='th' scope='row'>
-                      {row.id}
+                      {index + 1}
                     </TableCell>
                     <TableCell align='right'>{row.ime}</TableCell>
                     <TableCell align='right'>{row.prezime}</TableCell>

@@ -445,7 +445,13 @@ export default function OrdinacijeAll() {
                       page * rowsPerPage + rowsPerPage
                     )
                   : ordinacije
-                ).map((row) => <Row key={row.id_dom_zdravlja} row={row}></Row>)}
+                ).map((row, index) => (
+                  <Row
+                    key={row.id_dom_zdravlja}
+                    row_index={index}
+                    row={row}
+                  ></Row>
+                ))}
           </TableBody>
           <TableFooter>
             <TableRow>

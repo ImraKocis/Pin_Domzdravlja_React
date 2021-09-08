@@ -10,7 +10,7 @@ import * as FcIcons from 'react-icons/fc'
 export const SidebarDataWhenLoged = [
   {
     title: 'Ordinacije',
-    path: '/ordinacije',
+    path: '/',
     icon: <FaIcons.FaHospitalSymbol />,
   },
 

@@ -37,6 +37,7 @@ const useForm = (validate, Success, Failed) => {
             Failed(error.login)
           } else {
             Success(data)
+            console.log(data)
             console.log('valja')
             Failed(null)
           }

@@ -74,6 +74,7 @@ export default function OsobljeAdd(props) {
               <Grid className='gridClass' container spacing={3}>
                 <Grid item xs>
                   <TextField
+                    id='imeInput'
                     type='text'
                     name='ime'
                     variant='outlined'

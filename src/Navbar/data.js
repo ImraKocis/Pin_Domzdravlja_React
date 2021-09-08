@@ -9,7 +9,7 @@ import * as RiIcons from 'react-icons/ri'
 export const SidebarData = [
   {
     title: 'Ordinacije',
-    path: '/ordinacije',
+    path: '/',
     icon: <FaIcons.FaHospitalSymbol />,
   },
 

@@ -20,7 +20,7 @@ import Djelatnost from './komponente/djelatnosti/djelatnost'
 const history = createBrowserHistory()
 
 function redirect() {
-  history.push('/ordinacije')
+  history.push('/')
 }
 function App() {
   const [user, setUser] = useState(null)
@@ -44,7 +44,7 @@ function App() {
       <Router history={history}>
         <Sidebar logOut={LogOut} user={user} />
         <Switch>
-          <Route path='/ordinacije' exact>
+          <Route path='/' exact>
             <Ordinacije></Ordinacije>
           </Route>
           <Route path='/osoblje/opca-obiteljska-medicina' exact>

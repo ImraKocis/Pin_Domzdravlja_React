@@ -31,8 +31,8 @@ const Login = (props) => {
     props.Success,
     Failed
   )
-  function Success(message) {
-    setSuccessMessage(message)
+  function Redirect() {
+    //setSuccessMessage(message)
     document.getElementById('submitButton').disabled = true
     setTimeout(() => {
       document.getElementById('redirect').click()
@@ -81,7 +81,7 @@ const Login = (props) => {
               variant='contained'
               color='primary'
               className='input'
-              Success={props.Success}
+              Success={Redirect}
             >
               Prijavi se
             </Button>
