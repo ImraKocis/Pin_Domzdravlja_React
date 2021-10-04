@@ -418,7 +418,7 @@ export default function OrdinacijeAll() {
               <TableCell>R. br.</TableCell>
               <TableCell>Naziv</TableCell>
               <TableCell>Opis</TableCell>
-              <TableCell>Zupanija</TableCell>
+              <TableCell>Županija</TableCell>
               <TableCell>Grad</TableCell>
               <TableCell>Adresa</TableCell>
               <TableCell>Djelatnost</TableCell>
